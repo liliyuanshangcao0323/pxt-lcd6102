@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夏日祝福</title>
+    <link rel="stylesheet" href="summer_wish.css">
+</head>
+<body>
+    <div class="summer-container">
+        <h1>☀️夏日</h1>
+        <div class="wish-content">
+            <p>您有一份<span class="highlight">不断的夏日祝福</span>💌，确定要打开吗？</p>
+            <p class="subtitle">一旦开始，夏日祝福将不断涌来！🎊</p>
+            <div class="buttons">
+                <button id="openBtn" class="open-button">确定打开</button>
+                <button id="closeBtn" class="close-button">暂不打开</button>
+            </div>
+        </div>
+        
+        <!-- 隐藏的祝福内容 -->
+        <div id="messageBox" class="message-box">
+            <div class="message-content">
+                <div class="message-header">
+                    <h2>🍉 夏日清凉祝福 🍉</h2>
+                    <span id="closeMessage" class="close-icon">×</span>
+                </div>
+                <div class="message-body">
+                    <p>愿夏日的阳光带给你明媚的心情，</p>
+                    <p>愿清凉的微风拂去你所有的烦恼，</p>
+                    <p>愿甘甜的西瓜滋润你的心田，</p>
+                    <p>愿整个夏天你都能感受到快乐与幸福！</p>
+                    <div class="summer-elements">
+                        <span class="emoji">☀️</span>
+                        <span class="emoji">🌊</span>
+                        <span class="emoji">🍉</span>
+                        <span class="emoji">🍦</span>
+                        <span class="emoji">🏖️</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 夏日元素装饰 -->
+    <div class="summer-decoration">
+        <div class="sun"></div>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="wave wave-1"></div>
+        <div class="wave wave-2"></div>
+        <!-- 额外的夏日装饰元素 -->
+        <div class="bubble-container"></div>
+        <div class="sparkles"></div>
+    </div>
+    
+    <script src="summer_wish.js"></script>
+</body>
+</html>
