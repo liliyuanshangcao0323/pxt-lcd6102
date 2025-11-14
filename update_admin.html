@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新管理员账号</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            background-color: #e8f5e9;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #4CAF50;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .warning {
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>更新管理员账号</h1>
+        <p>本工具将删除所有现有的管理员账号，并添加新的管理员账号：</p>
+        <ul>
+            <li>用户名: Lizq</li>
+            <li>密码: asdfghjkl;'</li>
+        </ul>
+        <p class="warning">注意：此操作将删除所有现有的管理员账号，请谨慎操作！</p>
+        <button onclick="updateAdminAccount()">开始更新</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // 记录日志到页面
+        function log(message) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML += message + '\n';
+            console.log(message);
+        }
+
+        // 模拟securityModule的关键功能
+        const mockSecurityModule = {
+            generateSalt() {
+                let salt = '';
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=';
+                const saltLength = 32;
+                
+                for (let i = 0; i < saltLength; i++) {
+                    salt += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                
+                return salt;
+            },
+            
+            hashPassword(password, salt) {
+                const saltedPassword = password + salt;
+                let hash = 0;
+                
+                // 简单的哈希实现
+                for (let i = 0; i < saltedPassword.length; i++) {
+                    const char = saltedPassword.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // 转换为32位整数
+                }
+                
+                return { 
+                    hash: hash.toString(), 
+                    salt, 
+                    algorithm: 'enhanced-simple-hash',
+                    iterations: 1000 
+                };
+            }
+        };
+
+        // 读取现有数据
+        function readUserData() {
+            try {
+                const data = localStorage.getItem('appData');
+                if (data) {
+                    const parsedData = JSON.parse(data);
+                    log('已读取现有数据');
+                    return parsedData;
+                }
+                log('未找到现有数据，创建新数据结构');
+                return { users: [], tasks: [], notifications: [] };
+            } catch (e) {
+                log('错误: 读取用户数据失败: ' + e.message);
+                return { users: [], tasks: [], notifications: [] };
+            }
+        }
+
+        // 保存数据到localStorage
+        function saveUserData(data) {
+            try {
+                localStorage.setItem('appData', JSON.stringify(data));
+                log('数据已保存到localStorage');
+                return true;
+            } catch (e) {
+                log('错误: 保存数据失败: ' + e.message);
+                return false;
+            }
+        }
+
+        // 更新管理员账号
+        function updateAdminAccount() {
+            log('开始更新管理员账号...');
+            
+            // 读取现有数据
+            const appData = readUserData();
+            
+            // 过滤掉现有的管理员账号
+            const originalAdminCount = appData.users.filter(user => user && user.role === 'admin').length;
+            const nonAdminUsers = appData.users.filter(user => user && user.role !== 'admin');
+            log(`已删除 ${originalAdminCount} 个管理员账号`);
+            
+            // 生成新管理员账号的密码哈希和盐值
+            const newUsername = 'Lizq';
+            const newPassword = 'asdfghjkl;\'';
+            const salt = mockSecurityModule.generateSalt();
+            const passwordHash = mockSecurityModule.hashPassword(newPassword, salt);
+            
+            // 创建新的管理员账号
+            const newAdminUser = {
+                id: 'new-admin-' + Date.now(),
+                username: newUsername,
+                passwordHash: passwordHash.hash,
+                salt: salt,
+                role: 'admin',
+                name: 'Lizq管理员',
+                failedAttempts: 0,
+                lockedUntil: null,
+                createdAt: new Date().toISOString()
+            };
+            
+            // 更新用户列表
+            appData.users = [...nonAdminUsers, newAdminUser];
+            
+            // 保存更新后的数据
+            if (saveUserData(appData)) {
+                log('\n✅ 管理员账号更新成功!');
+                log('新管理员账号信息:');
+                log('- 用户名: ' + newUsername);
+                log('- 密码: ' + newPassword);
+                log('- 角色: admin');
+                log('\n请使用新账号登录系统。');
+                
+                // 提示用户
+                alert('管理员账号更新成功！\n\n用户名: Lizq\n密码: asdfghjkl;\'\n\n请刷新系统页面并使用新账号登录。');
+            } else {
+                log('❌ 管理员账号更新失败');
+                alert('更新失败，请检查控制台错误信息');
+            }
+        }
+    </script>
+</body>
+</html>
