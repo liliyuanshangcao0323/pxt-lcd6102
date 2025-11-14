@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生会管理系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 引入Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="container" id="login-container">
+        <div class="login-form">
+            <h1>学生会管理系统</h1>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" required placeholder="请输入用户名">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" required placeholder="请输入密码">
+                </div>
+
+                <button type="submit" class="btn-primary">登录</button>
+            </form>
+            <div id="login-message" class="message"></div>
+        </div>
+    </div>
+
+    <!-- 老师端页面 -->
+    <div class="container" id="teacher-container" style="display: none;">
+        <header>
+            <h1>学生会管理系统 - 老师端</h1>
+            <div class="header-actions">
+                <span id="teacher-info">欢迎，老师</span>
+                <button id="teacher-logout" class="btn-secondary">退出登录</button>
+            </div>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#student-management" class="nav-link active" data-section="student-management">学生管理</a></li>
+                <li><a href="#task-management" class="nav-link" data-section="task-management">任务管理</a></li>
+                <li><a href="#statistics" class="nav-link" data-section="statistics">统计分析</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <!-- 学生管理页面 -->
+            <section id="student-management" class="content-section">
+                <div class="section-header">
+                    <h2>学生管理</h2>
+                    <button id="add-student-btn" class="btn-primary">添加学生</button>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="student-search" placeholder="搜索学生...">
+                    <button id="search-student-btn" class="btn-secondary">搜索</button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="student-table">
+                        <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>班级</th>
+                                <th>职位</th>
+                                <th>联系方式</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-list">
+                            <!-- 学生数据将通过JS动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- 任务管理页面 -->
+            <section id="task-management" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>任务管理</h2>
+                    <button id="add-task-btn" class="btn-primary">发布任务</button>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="task-search" placeholder="搜索任务...">
+                    <button id="search-task-btn" class="btn-secondary">搜索</button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="task-table">
+                        <thead>
+                            <tr>
+                                <th>任务ID</th>
+                                <th>任务名称</th>
+                                <th>任务描述</th>
+                                <th>负责人</th>
+                                <th>截止日期</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="task-list">
+                            <!-- 任务数据将通过JS动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 管理员端页面 -->
+    <div class="container" id="admin-container" style="display: none;">
+        <header>
+            <h1>学生会管理系统 - 管理员端</h1>
+            <div class="header-actions">
+                <span id="admin-info">欢迎，管理员</span>
+                <button id="admin-logout" class="btn-secondary">退出登录</button>
+            </div>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#user-management" class="nav-link active" data-section="user-management">用户管理</a></li>
+                <li><a href="#statistics" class="nav-link" data-section="statistics">统计分析</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <!-- 用户管理页面 -->
+            <section id="user-management" class="content-section">
+                <div id="content">
+                    <!-- 管理员内容将通过JS动态生成 -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 学生端页面 -->
+    <div class="container" id="student-container" style="display: none;">
+        <header>
+            <h1>学生会管理系统 - 学生端</h1>
+            <div class="header-actions">
+                <span id="student-info">欢迎，学生</span>
+                <button id="student-logout" class="btn-secondary">退出登录</button>
+            </div>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#my-tasks" class="nav-link active" data-section="my-tasks">我的任务</a></li>
+                <li><a href="#my-profile" class="nav-link" data-section="my-profile">个人信息</a></li>
+                <li><a href="#statistics" class="nav-link" data-section="statistics">统计分析</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <!-- 我的任务页面 -->
+            <section id="my-tasks" class="content-section">
+                <div class="section-header">
+                    <h2>我的任务</h2>
+                </div>
+                
+                <div class="task-filters">
+                    <button class="filter-btn active" data-status="all">全部任务</button>
+                    <button class="filter-btn" data-status="pending">待完成</button>
+                    <button class="filter-btn" data-status="completed">已完成</button>
+                    <button class="filter-btn" data-status="overdue">逾期</button>
+                </div>
+                
+                <div class="task-list-container">
+                    <div id="student-task-list">
+                        <!-- 任务数据将通过JS动态生成 -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 任务详情页面 -->
+            <section id="task-details" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <div class="header-actions">
+                        <button id="back-to-tasks" class="btn-secondary">返回任务列表</button>
+                        <button id="complete-task-btn" class="btn-primary">标记完成</button>
+                    </div>
+                    <h2>任务详情</h2>
+                </div>
+                <div class="task-details-container" id="task-details-container">
+                    <div class="task-actions">
+                        <button id="task-details-back" class="btn-secondary">返回列表</button>
+                        <button id="task-details-complete" class="btn-primary">标记完成</button>
+                    </div>
+                    
+                    <div id="task-info" class="task-info">
+                        <!-- 任务信息将通过JS动态加载 -->
+                    </div>
+                    
+                    <!-- 文件上传区域 -->
+                    <div class="file-upload-section">
+                        <h3>提交作业</h3>
+                        <div class="file-upload">
+                            <input type="file" id="task-upload-file" class="hidden">
+                            <label for="task-upload-file" class="btn-secondary">选择文件</label>
+                            <div id="file-upload-preview" class="file-preview hidden">
+                                <span id="file-name-display"></span>
+                                <button id="remove-upload" class="btn-danger btn-sm">移除</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 评论区域 -->
+                    <div class="comments-section">
+                        <h3>评论/反馈</h3>
+                        <div class="comment-input">
+                            <textarea id="task-comment-input" placeholder="输入你的评论..."></textarea>
+                            <button id="task-comment-submit" class="btn-primary">提交评论</button>
+                        </div>
+                        <div id="task-comments-list" class="comments-list">
+                            <!-- 评论列表将通过JS动态加载 -->
+                        </div>
+                    </div>
+                </div>
+                <div class="task-comments" id="task-comments">
+                    <!-- 评论区会动态生成 -->
+                </div>
+            </section>
+            
+            <!-- 统计分析页面 -->
+            <section id="statistics" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>统计分析</h2>
+                </div>
+                <div class="stats-tabs">
+                    <button id="tab-overview" class="tab-btn active">整体概览</button>
+                    <button id="tab-tasks" class="tab-btn">任务统计</button>
+                    <button id="tab-students" class="tab-btn">学生参与</button>
+                </div>
+                
+                <!-- 整体概览 -->
+                <div id="overview-tab" class="tab-content active">
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <h3>总学生数</h3>
+                            <div class="stat-number" id="total-students">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>总任务数</h3>
+                            <div class="stat-number" id="total-tasks">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>已完成任务</h3>
+                            <div class="stat-number" id="completed-tasks">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>平均完成率</h3>
+                            <div class="stat-number" id="avg-completion-rate">0%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-item">
+                            <h3>任务完成趋势</h3>
+                            <canvas id="taskCompletionTrend"></canvas>
+                        </div>
+                        <div class="chart-item">
+                            <h3>任务状态分布</h3>
+                            <canvas id="taskStatusDistribution"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 任务统计 -->
+                <div id="tasks-tab" class="tab-content hidden">
+                    <div class="charts-container">
+                        <div class="chart-item full-width">
+                            <h3>任务完成情况</h3>
+                            <canvas id="tasksCompletionChart"></canvas>
+                        </div>
+                        <div class="chart-item">
+                            <h3>任务优先级分布</h3>
+                            <canvas id="taskPriorityChart"></canvas>
+                        </div>
+                        <div class="chart-item">
+                            <h3>逾期任务统计</h3>
+                            <canvas id="overdueTasksChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 学生参与 -->
+                <div id="students-tab" class="tab-content hidden">
+                    <div class="charts-container">
+                        <div class="chart-item full-width">
+                            <h3>学生任务完成率排名</h3>
+                            <canvas id="studentRankingChart"></canvas>
+                        </div>
+                        <div class="chart-item">
+                            <h3>班级任务完成对比</h3>
+                            <canvas id="classComparisonChart"></canvas>
+                        </div>
+                        <div class="chart-item">
+                            <h3>学生活跃度</h3>
+                            <canvas id="studentActivityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 个人信息页面 -->
+            <section id="my-profile" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>个人信息</h2>
+                </div>
+                
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <h3>个人信息</h3>
+                        <div class="profile-item">
+                            <label>学号：</label>
+                            <span id="profile-id"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>姓名：</label>
+                            <span id="profile-name"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>班级：</label>
+                            <span id="profile-class"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>电话：</label>
+                            <span id="profile-phone"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>邮箱：</label>
+                            <span id="profile-email"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>性别：</label>
+                            <span id="profile-gender"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>年龄：</label>
+                            <span id="profile-age"></span>
+                        </div>
+                        <div class="profile-item">
+                            <label>加入日期：</label>
+                            <span id="profile-join-date"></span>
+                        </div>
+                        <div class="profile-actions">
+                            <button id="edit-profile-btn" class="btn-secondary">编辑信息</button>
+                            <button id="change-password-btn" class="btn-secondary">修改密码</button>
+                            <button id="export-report-btn" class="btn-secondary">导出报告</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 任务统计区域 -->
+                    <div class="task-stats">
+                        <h3>任务完成统计</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">总任务数</span>
+                                <span id="task-stats-total" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">已完成</span>
+                                <span id="task-stats-completed" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">待完成</span>
+                                <span id="task-stats-pending" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">逾期任务</span>
+                                <span id="task-stats-overdue" class="stat-value">0</span>
+                            </div>
+                        </div>
+                        <div class="completion-rate">
+                            <div class="rate-header">
+                                <span>完成率</span>
+                                <span id="task-completion-rate">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="completion-progress" class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body">
+                <!-- 模态框内容将通过JS动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 工具模块 -->
+    <script src="modules/utils/utils.js" defer></script>
+    
+    <!-- 核心模块 - 按正确顺序引入 -->
+    <script src="modules/core/auth.js" defer></script>
+    <script src="modules/core/appData.js" defer></script>
+    <script src="modules/core/securityModule.js" defer></script>
+    
+    <!-- 功能模块 -->
+    <script src="modules/features/notificationModule.js" defer></script>
+    <script src="modules/features/teacherModule.js" defer></script>
+    <script src="modules/features/studentModule.js" defer></script>
+    <script src="modules/features/adminModule.js" defer></script>
+    
+    <!-- 模块加载器 - 用于管理模块加载过程 -->
+    <!-- 注意：moduleLoader.js必须在功能模块之后引入，以确保模块已经注册到window对象 -->
+    <script src="modules/core/moduleLoader.js" defer></script>
+    
+    <!-- 主应用逻辑 - 使用模块加载器确保所有模块加载完成 -->
+    <script src="js/app.js" defer></script>
+    <!-- 模块验证测试脚本 -->
+    <script src="js/moduleValidator.js" defer></script>
+</body>
+</html>
