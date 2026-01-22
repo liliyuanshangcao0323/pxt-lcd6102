@@ -21,9 +21,6 @@
   },
   "files": [
     "README.md",
-    "main.ts",
-    "i2c.ts",
-    "display.ts",
     "blocks.ts"
   ],
   "testFiles": [

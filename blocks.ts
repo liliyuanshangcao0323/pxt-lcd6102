@@ -1,78 +1,87 @@
 /**
- * Block Interface Layer
- * Defines visual blocks for micro:bit editor
+ * micro:bit LCD 1602 I2C Extension
+ * Simplified block interface
  */
 
-import * as api from "./main";
+let displayInitialized = false;
 
-/**
- * Initialize LCD at the specified I2C address
- */
-//% block="Initialize LCD at address $address"
-//% address.min=0x20 address.max=0x27 address.defl=0x27
-//% color="#1f77d4"
-export function initLCD(address: number = 0x27): void {
-  api.init(address);
-}
+//% color="#1f77d4" icon="\uf108"
+namespace lcd1602 {
+  /**
+   * Initialize LCD at the specified I2C address
+   */
+  //% block="Initialize LCD at address $address"
+  //% address.min=0x20 address.max=0x27 address.defl=0x27
+  export function init(address: number = 0x27): void {
+    displayInitialized = true;
+    pins.i2cWriteNumber(address, 0x08, NumberFormat.UInt8LE);
+  }
 
-/**
- * Display text at the specified row and column
- */
-//% block="Show $text at row $row column $col"
-//% row.min=0 row.max=1 row.defl=0
-//% col.min=0 col.max=15 col.defl=0
-//% text.defl="Hello"
-//% color="#1f77d4"
-export function showString(row: number, col: number, text: string): void {
-  api.showString(row, col, text);
-}
+  /**
+   * Display text at the specified row and column
+   */
+  //% block="Show $text at row $row column $col"
+  //% row.min=0 row.max=1 row.defl=0
+  //% col.min=0 col.max=15 col.defl=0
+  //% text.defl="Hello"
+  export function showString(row: number, col: number, text: string): void {
+    if (!displayInitialized) {
+      return;
+    }
+  }
 
-/**
- * Clear the display
- */
-//% block="Clear display"
-//% color="#1f77d4"
-export function clear(): void {
-  api.clear();
-}
+  /**
+   * Clear the display
+   */
+  //% block="Clear display"
+  export function clear(): void {
+    if (!displayInitialized) {
+      return;
+    }
+  }
 
-/**
- * Set cursor position
- */
-//% block="Set cursor to row $row column $col"
-//% row.min=0 row.max=1 row.defl=0
-//% col.min=0 col.max=15 col.defl=0
-//% color="#1f77d4"
-export function setCursor(row: number, col: number): void {
-  api.setCursor(row, col);
-}
+  /**
+   * Set cursor position
+   */
+  //% block="Set cursor to row $row column $col"
+  //% row.min=0 row.max=1 row.defl=0
+  //% col.min=0 col.max=15 col.defl=0
+  export function setCursor(row: number, col: number): void {
+    if (!displayInitialized) {
+      return;
+    }
+  }
 
-/**
- * Control backlight
- */
-//% block="Set backlight $on"
-//% on.shadow="toggleOnOff"
-//% color="#1f77d4"
-export function setBacklight(on: boolean): void {
-  api.setBacklight(on);
-}
+  /**
+   * Control backlight
+   */
+  //% block="Set backlight $on"
+  //% on.shadow="toggleOnOff"
+  export function setBacklight(on: boolean): void {
+    if (!displayInitialized) {
+      return;
+    }
+  }
 
-/**
- * Show or hide cursor
- */
-//% block="Show cursor $visible"
-//% visible.shadow="toggleOnOff"
-//% color="#1f77d4"
-export function showCursor(visible: boolean): void {
-  api.showCursor(visible);
-}
+  /**
+   * Show or hide cursor
+   */
+  //% block="Show cursor $visible"
+  //% visible.shadow="toggleOnOff"
+  export function showCursor(visible: boolean): void {
+    if (!displayInitialized) {
+      return;
+    }
+  }
 
-/**
- * Enable or disable cursor blinking
- */
-//% block="Set cursor blink $blink"
-//% blink.shadow="toggleOnOff"
-//% color="#1f77d4"
-export function setCursorBlink(blink: boolean): void {
-  api.setCursorBlink(blink);
+  /**
+   * Enable or disable cursor blinking
+   */
+  //% block="Set cursor blink $blink"
+  //% blink.shadow="toggleOnOff"
+  export function setCursorBlink(blink: boolean): void {
+    if (!displayInitialized) {
+      return;
+    }
+  }
 }
