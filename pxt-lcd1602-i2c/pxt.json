@@ -1,0 +1,137 @@
+{
+  "name": "microbit-lcd1602-i2c",
+  "description": "micro:bit extension for controlling 16x2 LCD displays via I2C",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "micro:bit community",
+  "homepage": "https://github.com/microbit-foundation/pxt-lcd1602-i2c",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microbit-foundation/pxt-lcd1602-i2c"
+  },
+  "namespace": "lcd1602",
+  "public": true,
+  "targetVersions": {
+    "target": "1.0.0",
+    "pxt": "7.0.0"
+  },
+  "dependencies": {
+    "core": "*"
+  },
+  "files": [
+    "README.md",
+    "main.ts",
+    "i2c.ts",
+    "display.ts",
+    "blocks.ts"
+  ],
+  "testFiles": [
+    "tests/**/*.ts"
+  ],
+  "preferredEditor": "tsprj",
+  "apiInfo": {
+    "apis": {
+      "lcd1602": {
+        "initLCD": {
+          "name": "initLCD",
+          "namespace": "lcd1602",
+          "kind": "function",
+          "description": "Initialize LCD at the specified I2C address",
+          "parameters": [
+            {
+              "name": "address",
+              "type": "number",
+              "description": "The I2C address (0x20-0x27, default: 0x27)"
+            }
+          ]
+        },
+        "showStringBlock": {
+          "name": "showStringBlock",
+          "namespace": "lcd1602",
+          "kind": "function",
+          "description": "Display text at the specified row and column",
+          "parameters": [
+            {
+              "name": "row",
+              "type": "number",
+              "description": "The row (0-1)"
+            },
+            {
+              "name": "col",
+              "type": "number",
+              "description": "The column (0-15)"
+            },
+            {
+              "name": "text",
+              "type": "string",
+              "description": "The text to display"
+            }
+          ]
+        },
+        "clearDisplay": {
+          "name": "clearDisplay",
+          "namespace": "lcd1602",
+          "kind": "function",
+          "description": "Clear the display"
+        },
+        "setCursorBlock": {
+          "name": "setCursorBlock",
+          "namespace": "lcd1602",
+          "kind": "function",
+          "description": "Set cursor position",
+          "parameters": [
+            {
+              "name": "row",
+              "type": "number",
+              "description": "The row (0-1)"
+            },
+            {
+              "name": "col",
+              "type": "number",
+              "description": "The column (0-15)"
+            }
+          ]
+        },
+        "setBacklightBlock": {
+          "name": "setBacklightBlock",
+          "namespace": "lcd1602",
+          "kind": "function",
+          "description": "Control backlight",
+          "parameters": [
+            {
+              "name": "on",
+              "type": "boolean",
+              "description": "true to turn on, false to turn off"
+            }
+          ]
+        },
+        "showCursorBlock": {
+          "name": "showCursorBlock",
+          "namespace": "lcd1602",
+          "kind": "function",
+          "description": "Show or hide cursor",
+          "parameters": [
+            {
+              "name": "visible",
+              "type": "boolean",
+              "description": "true to show, false to hide"
+            }
+          ]
+        },
+        "setCursorBlinkBlock": {
+          "name": "setCursorBlinkBlock",
+          "namespace": "lcd1602",
+          "kind": "function",
+          "description": "Enable or disable cursor blinking",
+          "parameters": [
+            {
+              "name": "blink",
+              "type": "boolean",
+              "description": "true to enable, false to disable"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
