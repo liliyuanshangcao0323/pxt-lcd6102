@@ -3,7 +3,7 @@
  * Defines visual blocks for micro:bit editor
  */
 
-import * as lcd1602 from "./main";
+import * as api from "./main";
 
 //% color="#1f77d4" icon="\uf108"
 namespace lcd1602 {
@@ -13,7 +13,7 @@ namespace lcd1602 {
   //% block="Initialize LCD at address $address"
   //% address.min=0x20 address.max=0x27 address.defl=0x27
   export function initLCD(address: number = 0x27): void {
-    lcd1602.init(address);
+    api.init(address);
   }
 
   /**
@@ -24,7 +24,7 @@ namespace lcd1602 {
   //% col.min=0 col.max=15 col.defl=0
   //% text.defl="Hello"
   export function showString(row: number, col: number, text: string): void {
-    lcd1602.showString(row, col, text);
+    api.showString(row, col, text);
   }
 
   /**
@@ -32,7 +32,7 @@ namespace lcd1602 {
    */
   //% block="Clear display"
   export function clear(): void {
-    lcd1602.clear();
+    api.clear();
   }
 
   /**
@@ -42,7 +42,7 @@ namespace lcd1602 {
   //% row.min=0 row.max=1 row.defl=0
   //% col.min=0 col.max=15 col.defl=0
   export function setCursor(row: number, col: number): void {
-    lcd1602.setCursor(row, col);
+    api.setCursor(row, col);
   }
 
   /**
@@ -51,7 +51,7 @@ namespace lcd1602 {
   //% block="Set backlight $on"
   //% on.shadow="toggleOnOff"
   export function setBacklight(on: boolean): void {
-    lcd1602.setBacklight(on);
+    api.setBacklight(on);
   }
 
   /**
@@ -60,7 +60,7 @@ namespace lcd1602 {
   //% block="Show cursor $visible"
   //% visible.shadow="toggleOnOff"
   export function showCursor(visible: boolean): void {
-    lcd1602.showCursor(visible);
+    api.showCursor(visible);
   }
 
   /**
@@ -69,6 +69,6 @@ namespace lcd1602 {
   //% block="Set cursor blink $blink"
   //% blink.shadow="toggleOnOff"
   export function setCursorBlink(blink: boolean): void {
-    lcd1602.setCursorBlink(blink);
+    api.setCursorBlink(blink);
   }
 }
