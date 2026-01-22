@@ -1,0 +1,24 @@
+{
+  "name": "microbit-lcd1602-i2c",
+  "version": "1.0.0",
+  "description": "micro:bit extension for controlling 16x2 LCD displays via I2C",
+  "main": "main.ts",
+  "scripts": {
+    "test": "pxt test",
+    "build": "pxt build",
+    "serve": "pxt serve"
+  },
+  "keywords": [
+    "microbit",
+    "lcd",
+    "i2c",
+    "display",
+    "1602"
+  ],
+  "author": "micro:bit community",
+  "license": "MIT",
+  "devDependencies": {
+    "pxt-core": "^7.0.0"
+  },
+  "dependencies": {}
+}
