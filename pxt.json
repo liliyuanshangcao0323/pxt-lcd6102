@@ -13,8 +13,8 @@
   "public": true,
   "target": "microbit",
   "targetVersions": {
-    "target": "6.0.0",
-    "pxt": "9.0.0"
+    "target": "5.0.0",
+    "pxt": "8.0.0"
   },
   "dependencies": {
     "core": "*"
