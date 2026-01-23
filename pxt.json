@@ -1,0 +1,31 @@
+{
+  "name": "test-lcd1602",
+  "description": "Test LCD 1602 I2C extension for micro:bit",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "test",
+  "homepage": "https://github.com/liliyuanshangcao0323/pxt-test-lcd",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liliyuanshangcao0323/pxt-test-lcd"
+  },
+  "namespace": "testlcd",
+  "public": true,
+  "target": "microbit",
+  "targetVersions": {
+    "target": "5.0.0",
+    "pxt": "8.0.0"
+  },
+  "dependencies": {
+    "core": "*"
+  },
+  "files": [
+    "README.md",
+    "blocks.ts",
+    "test.ts"
+  ],
+  "testFiles": [
+    "test.ts"
+  ],
+  "preferredEditor": "tsprj"
+}
