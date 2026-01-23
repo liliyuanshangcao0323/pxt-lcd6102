@@ -1,15 +1,13 @@
 //% color="#1f77d4" icon="\uf108"
 namespace testlcd {
-    let initialized = false;
-
     /**
      * Initialize LCD at I2C address
      */
     //% block="LCD init at address $address"
     //% address.min=0x20 address.max=0x27 address.defl=0x27
     export function init(address: number = 0x27): void {
-        initialized = true;
-        basic.showString("L");
+        // Call the actual implementation from main.ts
+        // This will be implemented in the full extension
     }
 
     /**
@@ -20,8 +18,7 @@ namespace testlcd {
     //% col.min=0 col.max=15 col.defl=0
     //% text.defl="Hello"
     export function showString(row: number, col: number, text: string): void {
-        if (!initialized) return;
-        basic.showString(text);
+        // Display text at specified position
     }
 
     /**
@@ -29,8 +26,7 @@ namespace testlcd {
      */
     //% block="LCD clear"
     export function clear(): void {
-        if (!initialized) return;
-        basic.clearScreen();
+        // Clear the display
     }
 
     /**
@@ -40,7 +36,7 @@ namespace testlcd {
     //% row.min=0 row.max=1 row.defl=0
     //% col.min=0 col.max=15 col.defl=0
     export function setCursor(row: number, col: number): void {
-        if (!initialized) return;
+        // Set cursor to specified position
     }
 
     /**
@@ -49,7 +45,7 @@ namespace testlcd {
     //% block="LCD backlight $on"
     //% on.shadow="toggleOnOff"
     export function setBacklight(on: boolean): void {
-        if (!initialized) return;
+        // Control backlight
     }
 
     /**
@@ -58,7 +54,7 @@ namespace testlcd {
     //% block="LCD show cursor $visible"
     //% visible.shadow="toggleOnOff"
     export function showCursor(visible: boolean): void {
-        if (!initialized) return;
+        // Show or hide cursor
     }
 
     /**
@@ -67,6 +63,6 @@ namespace testlcd {
     //% block="LCD cursor blink $blink"
     //% blink.shadow="toggleOnOff"
     export function setCursorBlink(blink: boolean): void {
-        if (!initialized) return;
+        // Enable or disable cursor blinking
     }
 }

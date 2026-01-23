@@ -22,6 +22,7 @@
   "files": [
     "README.md",
     "blocks.ts",
+    "main.ts",
     "test.ts"
   ],
   "testFiles": [
